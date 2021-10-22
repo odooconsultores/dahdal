@@ -1,0 +1,6 @@
+[submodule "proandsysdte14"]
+	path = proandsysdte14
+	url = https://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:x-oauth-basic@github.com/odooconsultores/proandsysdte14
+[submodule "terceros14"]
+	path = terceros14
+	url = https://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:x-oauth-basic@github.com/odooconsultores/terceros14
