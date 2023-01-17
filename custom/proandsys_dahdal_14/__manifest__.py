@@ -14,7 +14,7 @@
 """,
 	'depends': ['proandsys_report_14'],
 	'data': [
-		'report/account_move.xml',
+		#'report/account_move.xml',
 	],
 	'installable': True,	
 }
