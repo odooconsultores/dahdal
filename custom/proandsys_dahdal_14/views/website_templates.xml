@@ -10,4 +10,10 @@
     </xpath>
 </template>
 
+<template id="address" inherit_id="website_sale.address" name="Address Management" customize_show="True">
+    <xpath expr="//select[@name='country_id']" position="attributes">
+        <attribute name="t-att-disabled">1</attribute>
+    </xpath>
+</template>
+
 </odoo>
