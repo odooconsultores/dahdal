@@ -12,9 +12,11 @@
 """
 
 """,
-	'depends': ['proandsys_report_14'],
+	'depends': ['base', 'proandsys_report_14'],
 	'data': [
 		#'report/account_move.xml',
+		'views/website_templates.xml',
+		'views/res_country_views.xml',
 	],
 	'installable': True,	
 }

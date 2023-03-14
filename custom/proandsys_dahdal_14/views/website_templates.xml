@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="company_description_dahdal" inherit_id="website.company_description" name="Dahdal" customize_show="True">
+    <xpath expr="//div[@t-field='res_company.partner_id']" position="replace">
+        <span t-field="res_company.partner_id.name"></span>
+        <div t-field="res_company.partner_id" t-options='{
+            "widget": "contact",
+            "fields": ["address", "phone", "mobile", "email"]}'/>
+    </xpath>
+</template>
+
+</odoo>
