@@ -12,9 +12,9 @@
 """
 
 """,
-	'depends': ['base', 'proandsys_report_14'],
+	'depends': ['base', 'proandsys_report_14', 'product', 'website_sale'],
 	'data': [
-		#'report/account_move.xml',
+		'views/product_views.xml',
 		'views/website_templates.xml',
 		'views/res_country_views.xml',
 	],

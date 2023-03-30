@@ -16,4 +16,26 @@
     </xpath>
 </template>
 
+<template  id="website_sale_coupon_cart_hide_qty" inherit_id="website_sale.cart_lines">
+    <xpath expr="//table[@id='cart_products']/tbody//tr//td[hasclass('td-product_name')]" position="replace">
+        <td class='td-product_name'>
+            <t t-set="combination_info" t-value="line.sudo().product_id._get_combination_info_variant(pricelist=website_sale_order.pricelist_id)"/>
+            <div>
+                <a t-att-href="line.sudo().product_id.website_url">
+                    <strong t-esc="combination_info['display_name']" />
+                </a>
+            </div>
+            <div class="text-muted d-none d-md-block" t-esc="line.sudo().product_id.web_description" />
+        </td>
+    </xpath>
+</template>
+
+<template id="shop_product_carousel" inherit_id="website_sale.shop_product_carousel" name="Shop Product Carousel">
+    <xpath expr="//div[@id='o-carousel-product']" position="inside">
+        <div contenteditable="false">
+            <div t-field="product_variant.web_description"/>
+        </div>
+    </xpath>
+</template>
+
 </odoo>

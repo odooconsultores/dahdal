@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="product_template_dahdal_form_view" model="ir.ui.view">
+        <field name="name">product.template.dahdal.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='description']" position="before">
+                <group string="Descripcion Sitio Web">
+                    <field name="web_description" nolabel="1"
+                           placeholder="Esta descripcion se muestra en el sitio web."/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+    </data>
+</odoo>
