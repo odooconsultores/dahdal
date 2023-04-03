@@ -25,7 +25,7 @@
                     <strong t-esc="combination_info['display_name']" />
                 </a>
             </div>
-            <div class="text-muted d-none d-md-block" t-esc="line.sudo().product_id.web_description" />
+<!--            <div class="text-muted d-none d-md-block" t-esc="line.sudo().product_id.web_description" />-->
         </td>
     </xpath>
 </template>
@@ -35,6 +35,11 @@
         <div contenteditable="false">
             <div t-field="product_variant.web_description"/>
         </div>
+    </xpath>
+</template>
+
+<template id="product" inherit_id="website_sale.product" name="Product">
+    <xpath expr="//p[@t-field='product.description_sale']" position="replace">
     </xpath>
 </template>
 
