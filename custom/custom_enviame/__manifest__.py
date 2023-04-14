@@ -5,7 +5,7 @@
     'author': 'Clara Savelli <clara.15is.cs@gmail.com',
     'license': 'AGPL-3',
     'website': '',
-    'depends': ['l10n_cl_enviame'],
+    'depends': ['website_sale', 'l10n_cl_enviame', 'payment_webpay_plus'],
     'data': [
         # 'views/res_config_settings_views.xml',
     ],
