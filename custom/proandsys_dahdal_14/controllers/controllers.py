@@ -1,4 +1,4 @@
-from odoo import http
+from odoo import http, fields
 from odoo.http import request
 
 from odoo.addons.website_sale.controllers.main import WebsiteSale
@@ -35,3 +35,20 @@ class WebsiteSaleDahdal(WebsiteSale):
             'countries': country.get_website_sale_countries(mode=mode[1]),
         }
         return res
+
+    @http.route(['/shop/cart'], type='http', auth="public", website=True, sitemap=False)
+    def cart(self, access_token=None, revive='', **post):
+        if post.get('return_id'):
+            order = request.env['sale.order'].sudo().browse(int(post['return_id']))
+            order.action_draft()
+            # Important: without this the order disappears from the website
+            order.sudo().transaction_ids.write({'state': 'draft'})
+            request.session['sale_order_id'] = order.id
+            values = {
+                'website_sale_order': order,
+                'date': fields.Date.today(),
+                'suggested_products': [],
+                'access_token': order.access_token,
+            }
+            return request.render("website_sale.cart", values)
+        return super().cart(access_token, revive, **post)
