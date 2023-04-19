@@ -43,4 +43,16 @@
     </xpath>
 </template>
 
+<template id="confirmation" inherit_id="website_sale.confirmation">
+    <xpath expr="//div[@id='oe_structure_website_sale_confirmation_1']" position="before">
+        <a role="button" class="btn btn-primary btn-icon float-right" aria-label="Regresar"
+                t-att-href="'/shop/cart/?return_id=%s&amp;' % order.id">
+            <i class="fa fa-arrow-circle-left">Regresar</i>
+        </a>
+
+    </xpath>
+
+</template>
+
+
 </odoo>
