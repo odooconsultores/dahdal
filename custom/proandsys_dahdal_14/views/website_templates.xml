@@ -54,5 +54,12 @@
 
 </template>
 
+<template id="pricelist_list" inherit_id="website_sale.pricelist_list">
+    <xpath expr="//div" position="attributes">
+        <attribute name="t-attf-class">dropdown#{'' if website_sale_pricelists and len(website_sale_pricelists)&gt;0 else ' d-none'} #{_classes}</attribute>
+    </xpath>
+</template>
+
+
 
 </odoo>
