@@ -12,11 +12,12 @@
 """
 
 """,
-	'depends': ['base', 'proandsys_report_14', 'product', 'website_sale'],
+	'depends': ['base', 'proandsys_report_14', 'product', 'website_sale', 'web'],
 	'data': [
 		'views/product_views.xml',
 		'views/website_templates.xml',
 		'views/res_country_views.xml',
+		'views/webclient_templates.xml',
 	],
 	'installable': True,	
 }
