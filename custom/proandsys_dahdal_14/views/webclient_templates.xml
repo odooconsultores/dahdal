@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <template id="view_web_layout" inherit_id="web.layout" name="View Layout">
+        <xpath expr="//head/script[@id='web.layout.odooscript'] | //head/script[last()]" position="after">
+            <!-- Google Tag Manager -->
+            <script type="text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&lt;='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-WH75P44');</script>
+            <!-- End Google Tag Manager -->
+        </xpath>
+        <xpath expr="//body" position="inside">
+            <!-- Google Tag Manager (noscript) -->
+            <noscript>
+                <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WH75P44"
+                        height="0" width="0"
+                        style="display:none;visibility:hidden"/>
+            </noscript>
+            <!-- End Google Tag Manager (noscript) -->
+        </xpath>
+    </template>
+
+
+    </data>
+</odoo>
