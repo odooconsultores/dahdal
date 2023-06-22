@@ -44,17 +44,17 @@ class WebsiteDeliverySend(WebsiteSaleDeliverySend):
             r = requests.get(response, headers=header)
             data = json.loads(r.text.encode('utf8'))
             for t in data.get('data', []):
-                # if carrier.delivery_request.code == t['carrier']:
-                amount_delivery = t['services'][0]['price']
-                amount_delivery_untax = amount_delivery * 1.01
-                order.amount_delivery = amount_delivery * 1.01 * 1.19
-                amount_untaxed = amount_tax = 0
-                for line in order.order_line:
-                    amount_untaxed += line.price_subtotal if not line.is_delivery else 0
-                    amount_tax += line.price_tax if not line.is_delivery else 0
-                order.amount_untaxed = amount_untaxed + amount_delivery_untax
-                order.amount_tax = amount_tax + (amount_delivery_untax * 0.19)
-                order.amount_total = amount_untaxed + amount_delivery_untax + order.amount_tax
+                if carrier.delivery_request.code == t['carrier']:
+                    amount_delivery = t['services'][0]['price']
+                    amount_delivery_untax = amount_delivery * 1.01
+                    order.amount_delivery = amount_delivery * 1.01 * 1.19
+                    amount_untaxed = amount_tax = 0
+                    for line in order.order_line:
+                        amount_untaxed += line.price_subtotal if not line.is_delivery else 0
+                        amount_tax += line.price_tax if not line.is_delivery else 0
+                    order.amount_untaxed = amount_untaxed + amount_delivery_untax
+                    order.amount_tax = amount_tax + (amount_delivery_untax * 0.19)
+                    order.amount_total = amount_untaxed + amount_delivery_untax + order.amount_tax
             if order.amount_delivery == 1 or order.amount_delivery == 0.0:
                 raise UserError("Disculpe!!! El servicio de envio no esta disponible para esta Comuna")
             for sale in order.order_line.filtered(lambda x: x.is_delivery is True):
