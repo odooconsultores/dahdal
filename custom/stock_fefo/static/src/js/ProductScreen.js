@@ -50,10 +50,18 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
                             removal = this.env.pos.removals.find(rm => rm.id === product.categ.removal_strategy_id[0])
                         }
 
+                        // filters the others lines of orders
+                        var lines_lot = this.currentOrder.get_orderlines()
+                                .filter(line => line.product.id === product.id)
+                        // create list of lot and quantity by line
+                        let lot_names = lines_lot
+                          .filter(x => x.pack_lot_lines && x.pack_lot_lines.models.length && x.pack_lot_lines.models[0].attributes)
+                          .map(x => [x.pack_lot_lines.models[0].attributes.lot_name, x.quantity]);
+
                         let lotId = await this.rpc({
                             model: 'product.product',
                             method: 'get_lot_id',
-                            args: [product.id, self.env.pos.config.id],
+                            args: [product.id, self.env.pos.config.id, lot_names],
                         });
                         if (lotId) {
                             var payload = [{
