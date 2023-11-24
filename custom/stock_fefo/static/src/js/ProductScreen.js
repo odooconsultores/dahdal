@@ -19,9 +19,25 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
 
     const PosFEFOProductScreen = (ProductScreen) =>
         class extends ProductScreen {
+            async _onClickPay() {
+                if (this.env.pos.get_order().orderlines.any(line => line.get_product().tracking !== 'none' && line.has_valid_quantity_lot() && (this.env.pos.picking_type.use_create_lots || this.env.pos.picking_type.use_existing_lots))) {
+                    const { confirmed } = await this.showPopup('ConfirmPopup', {
+                        title: this.env._t('Algunos productos no se han dividido por lotes'),
+                        body: this.env._t('¿Está seguro de querer generar una linea con más cantidad de la que posee el lote?'),
+                        confirmText: this.env._t('Yes'),
+                        cancelText: this.env._t('No')
+                    });
+                    if (confirmed) {
+                        super._onClickPay(...arguments);
+                    }
+                } else {
+                    super._onClickPay(...arguments);
+                }
+            }
             async _getAddProductOptions(product) {
                 let self = this;
                 let price_extra = 0.0;
+                let availables_lots = [];
                 let draftPackLotLines, weight, description, packLotLinesToEdit;
 
                 if (this.env.pos.config.product_configurator && _.some(product.attribute_line_ids, (id) => id in this.env.pos.attributes_by_ptal_id)) {
@@ -60,8 +76,11 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
 
                         let lotId = await this.rpc({
                             model: 'product.product',
-                            method: 'get_lot_id',
+                            method: 'get_lot_ids',
                             args: [product.id, self.env.pos.config.id, lot_names],
+                        }).then(function(lots) {
+                            availables_lots = lots;
+                            return lots.length ? lots[0][0] : false
                         });
                         if (lotId) {
                             var payload = [{
@@ -143,7 +162,7 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
                     }
                 }
 
-                return { draftPackLotLines, quantity: weight, description, price_extra };
+                return { draftPackLotLines, quantity: weight, description, price_extra, availables_lots: availables_lots};
             }
         };
 

@@ -10,6 +10,9 @@
         'views/product_views.xml',
         'views/assets.xml',
     ],
+    'qweb': [
+        'static/src/xml/orderLine.xml',
+    ],
     'installable': True,
     'application': False,
     'auto_install': False,
