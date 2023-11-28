@@ -12,6 +12,7 @@
     ],
     'qweb': [
         'static/src/xml/orderLine.xml',
+        'static/src/xml/OrderReceipt.xml',
     ],
     'installable': True,
     'application': False,

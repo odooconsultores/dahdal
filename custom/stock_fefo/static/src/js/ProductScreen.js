@@ -74,17 +74,20 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
                           .filter(x => x.pack_lot_lines && x.pack_lot_lines.models.length && x.pack_lot_lines.models[0].attributes)
                           .map(x => [x.pack_lot_lines.models[0].attributes.lot_name, x.quantity]);
 
+                        let lot_date;
                         let lotId = await this.rpc({
                             model: 'product.product',
                             method: 'get_lot_ids',
                             args: [product.id, self.env.pos.config.id, lot_names],
                         }).then(function(lots) {
                             availables_lots = lots;
+                            lot_date = lots.length ? lots[0][2] : false;
                             return lots.length ? lots[0][0] : false
                         });
                         if (lotId) {
                             var payload = [{
                                     text: lotId,
+                                    date: lot_date,
                                     _id: 0,
                                 }];
                             var confirmed = true;
@@ -99,7 +102,7 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
                             );
                             const newPackLotLines = payload
                                 .filter(item => !item.id)
-                                .map(item => ({ lot_name: item.text }));
+                                .map(item => ({ lot_name: item.text , expiration_date: item.date}));
 
                             draftPackLotLines = { modifiedPackLotLines, newPackLotLines };
                         }
@@ -133,7 +136,7 @@ odoo.define('stock_fefo.ProductScreen', function (require) {
                         );
                         const newPackLotLines = payload.newArray
                             .filter(item => !item.id)
-                            .map(item => ({ lot_name: item.text }));
+                            .map(item => ({ lot_name: item.text , expiration_date: item.date}));
 
                         draftPackLotLines = { modifiedPackLotLines, newPackLotLines };
                         } else {

@@ -38,5 +38,5 @@ class ProductProduct(models.Model):
                 if quant and quant.filtered(lambda x: x.quantity > 0):
                     quant = quant.filtered(lambda x: x.quantity > 0)
                     lot_name = quant[0].lot_id.name
-                    result.append((lot_name, quant.available_quantity - quatity_order))
+                    result.append((lot_name, quant.available_quantity - quatity_order, quant[0].lot_id.expiration_date.date().strftime('%d-%m-%Y')))
         return result

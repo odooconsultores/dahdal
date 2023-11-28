@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+	    <xpath expr="//t[@t-foreach='line.pack_lot_lines']//li" position="inside">
+            <t t-if="lot.attributes['expiration_date']"> (Exp. <t t-esc="lot.attributes['expiration_date']"/>)</t>
+	    </xpath>
+    </t>
+
+</templates>

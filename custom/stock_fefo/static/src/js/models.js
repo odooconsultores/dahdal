@@ -7,6 +7,8 @@ var models = require('point_of_sale.models');
 var _super_orderline = models.Orderline.prototype;
 var _super_order = models.Order.prototype;
 
+var exports = {};
+
 
 var PacklotlineCollection = Backbone.Collection.extend({
     model: models.Packlotline,
@@ -30,17 +32,100 @@ var PacklotlineCollection = Backbone.Collection.extend({
     }
 });
 
+exports.Packlotline = Backbone.Model.extend({
+    defaults: {
+        lot_name: null,
+        expiration_date: 'lkdjkfjhs'
+    },
+    initialize: function(attributes, options){
+        this.order_line = options.order_line;
+        if (options.json) {
+            this.init_from_JSON(options.json);
+            return;
+        }
+    },
+
+    init_from_JSON: function(json) {
+        this.order_line = json.order_line;
+        console.log('lote')
+        console.log(json)
+        this.set_lot_name(json.lot_name);
+        this.set_expiration_date(json.expiration_date);
+    },
+
+    set_expiration_date: function(expiration_date){
+        this.set({lot_name : _.str.trim(expiration_date) || null});
+    },
+
+    set_lot_name: function(name){
+        this.set({lot_name : _.str.trim(name) || null});
+    },
+
+    get_lot_name: function(){
+        return this.get('lot_name');
+    },
+
+    get_expiration_date: function(){
+        return this.get('expiration_date');
+    },
+
+    export_as_JSON: function(){
+        return {
+            lot_name: this.get_lot_name(),
+        };
+    },
+
+    add: function(){
+        var order_line = this.order_line,
+            index = this.collection.indexOf(this);
+        var new_lot_model = new exports.Packlotline({}, {'order_line': this.order_line});
+        this.collection.add(new_lot_model, {at: index + 1});
+        return new_lot_model;
+    },
+
+    remove: function(){
+        this.collection.remove(this);
+    }
+});
+
 models.Orderline = models.Orderline.extend({
-//    set_product_lot: function(product){
-//        this.has_product_lot = product.tracking !== 'none';
-//        this.pack_lot_lines  = this.has_product_lot && new PacklotlineCollection(null, {'order_line': this});
-//    },
     initialize: function(attr,options){
         _super_orderline.initialize.apply(this,arguments);
         this.availables_lots = [];
-//        if (options.quantity) {
-//            this.set_quantity(options.quantity);
-//        }
+    },
+
+    setPackLotLines: function({ modifiedPackLotLines, newPackLotLines }) {
+        // rewrite the method
+        // Set the new values for modified lot lines.
+        let lotLinesToRemove = [];
+        for (let lotLine of this.pack_lot_lines.models) {
+            const modifiedLotName = modifiedPackLotLines[lotLine.cid];
+            if (modifiedLotName) {
+                lotLine.set({ lot_name: modifiedLotName});
+            } else {
+                // We should not call lotLine.remove() here because
+                // we don't want to mutate the array while looping thru it.
+                lotLinesToRemove.push(lotLine);
+            }
+        }
+
+        // Remove those that needed to be removed.
+        for (let lotLine of lotLinesToRemove) {
+            lotLine.remove();
+        }
+
+        // Create new pack lot lines.
+        let newPackLotLine;
+        for (let newLotLine of newPackLotLines) {
+            newPackLotLine = new exports.Packlotline({}, { order_line: this });
+            newPackLotLine.set({ lot_name: newLotLine.lot_name, expiration_date: newLotLine.expiration_date });
+            this.pack_lot_lines.add(newPackLotLine);
+        }
+
+        // Set the quantity of the line based on number of pack lots.
+        if(!this.product.to_weight){
+            this.pack_lot_lines.set_quantity_by_lot();
+        }
     },
 
     has_valid_quantity_lot: function(){
