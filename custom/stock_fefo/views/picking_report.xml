@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_shipping" inherit_id="stock.report_picking" name="Dahdal picking" customize_show="True">
+        <xpath expr="//th[@name='th_serial_number']" position="after">
+            <th name="th_venc" t-if="has_serial_number">
+                <strong>FCH VENC.</strong>
+            </th>
+        </xpath>
+        <xpath expr="//t[@t-foreach='o.move_ids_without_package']//td[5]" position="after">
+            <td t-if="has_serial_number">
+                <div>
+                    <span t-field="ml.lot_id.expiration_date"/>
+                </div>
+            </td>
+        </xpath>
+    </template>
+
+
+</odoo>

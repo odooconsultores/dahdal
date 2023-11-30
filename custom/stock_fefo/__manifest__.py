@@ -8,6 +8,7 @@
     'data': [
         'views/pos_config.xml',
         'views/product_views.xml',
+        'views/picking_report.xml',
         'views/assets.xml',
     ],
     'qweb': [

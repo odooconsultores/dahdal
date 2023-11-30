@@ -810,7 +810,158 @@
                         </tr>
                     </tbody>
                 </table>
+            </xpath>
+        </template>
 
+        <template id="reporte_picking_sii" inherit_id="proandsys_report_14.reporte_picking_sii" name="Dahdal invoice" customize_show="True">
+            <xpath expr="//table[hasclass('tabla-lineas')]" position="replace">
+                <table class="tabla-lineas">
+                    <thead>
+                        <tr>
+                            <th style="width:12%">CODIGO</th>
+                            <th style="width:32%">DESCRIPCIÓN</th>
+                            <th style="width:6%">CTDAD</th>
+                            <th style="width:8%">U.MEDIDA</th>
+                            <th style="width:6%">LOTE</th>
+                            <th style="width:10%">FCH VENC.</th>
+                            <th style="width:10%">P UNIT.</th>
+                            <th style="width:6%">DSCTO</th>
+                            <th style="width:10%">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.move_ids_without_package" t-as="l" style="vertical-align:top">
+                            <td>
+                                <t t-if="l.product_id">
+                                    <span t-field="l.product_id.default_code"/>
+                                </t>
+                            </td>
+                            <td class="text-left overflow-visible" style="border-right:1px solid black;margin:0px 2px 0px 2px; padding: 0px 5px 0px 5px">
+                                <t t-set="attributes" t-value="', '.join(l.product_id.product_template_attribute_value_ids.mapped('name'))"/>
+                                <t t-if="attributes">
+                                    <t t-set="attributes" t-value="' ({})'.format(attributes)"/>
+                                </t>
+                                <t t-set="product_name" t-value="'{}{}'.format(l.product_id.name, attributes)"/>
+
+                                <!--<span t-esc="l.name"/>-->
+                                <span t-esc="product_name"/>
+                            </td>
+                            <td class="text-center">
+                                <span style="display: block"  t-esc="'%.3f'% l.quantity_done"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-if="l.sale_line_id.product_uom">
+                                    <span t-field="l.sale_line_id.product_uom"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="l.product_id.uom_id"/>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-foreach="l.move_line_ids" t-as="ml">
+                                    <span t-field="ml.lot_id.name"/><br/>
+                                </t>
+                            </td>
+
+                            <td>
+                                <t t-foreach="l.move_line_ids" t-as="ml">
+                                    <span t-field="ml.expiration_date"/><br/>
+                                </t>
+
+                            </td>
+                            <td class="text-right">
+                                <span t-field="l.price_sale" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="l.discount"/>
+                            </td>
+                            <td class="text-right">
+                                <!--t t-if="o.tax_included">
+                                    <span t-field="l.price_total"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="l.price_subtotal"/>
+                                </t-->
+                                <span t-field="l.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </xpath>
+            <xpath expr="//div[hasclass('page')]/div[3]//table[hasclass('tabla-lineas')]" position="replace">
+                <table class="tabla-lineas">
+                    <thead>
+                        <tr>
+                            <th style="width:12%">CODIGO</th>
+                            <th style="width:32%">DESCRIPCIÓN</th>
+                            <th style="width:6%">CTDAD</th>
+                            <th style="width:8%">U.MEDIDA</th>
+                            <th style="width:6%">LOTE</th>
+                            <th style="width:10%">FCH VENC.</th>
+                            <th style="width:10%">P UNIT.</th>
+                            <th style="width:6%">DSCTO</th>
+                            <th style="width:10%">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.move_ids_without_package" t-as="l" style="vertical-align:top">
+                            <td>
+                                <t t-if="l.product_id">
+                                    <span t-field="l.product_id.default_code"/>
+                                </t>
+                            </td>
+                            <td class="text-left overflow-visible" style="border-right:1px solid black;margin:0px 2px 0px 2px; padding: 0px 5px 0px 5px">
+                                <t t-set="attributes" t-value="', '.join(l.product_id.product_template_attribute_value_ids.mapped('name'))"/>
+                                <t t-if="attributes">
+                                    <t t-set="attributes" t-value="' ({})'.format(attributes)"/>
+                                </t>
+                                <t t-set="product_name" t-value="'{}{}'.format(l.product_id.name, attributes)"/>
+
+                                <!--<span t-esc="l.name"/>-->
+                                <span t-esc="product_name"/>
+                            </td>
+                            <td class="text-center">
+                                <span style="display: block"  t-esc="'%.3f'% l.quantity_done"/>
+                            </td>
+                            <td class="text-center">
+                                <t t-if="l.sale_line_id.product_uom">
+                                    <span t-field="l.sale_line_id.product_uom"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="l.product_id.uom_id"/>
+                                </t>
+                            </td>
+                            <td>
+                                <t t-foreach="l.move_line_ids" t-as="ml">
+                                    <span t-field="ml.lot_id.name"/><br/>
+                                </t>
+                            </td>
+
+                            <td>
+                                <t t-foreach="l.move_line_ids" t-as="ml">
+                                    <span t-field="ml.expiration_date"/><br/>
+                                </t>
+
+                            </td>
+                            <td class="text-right">
+                                <span t-field="l.price_sale" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-field="l.discount"/>
+                            </td>
+                            <td class="text-right">
+                                <!--t t-if="o.tax_included">
+                                    <span t-field="l.price_total"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="l.price_subtotal"/>
+                                </t-->
+                                <span t-field="l.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </xpath>
         </template>
     </data>
