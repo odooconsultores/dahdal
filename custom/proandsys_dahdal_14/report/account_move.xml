@@ -781,7 +781,7 @@
                             </td>
                             <td class="text-center">
                                 <t t-foreach="l.lot_ids" t-as="lot">
-                                    <p style="display: block" t-esc="lot.expiration_date"/>
+                                    <p style="display: block" t-esc="lot.expiration_date.strftime('%d-%m-%Y')"/>
                                 </t>
                             </td>
                             <td class="text-center">
@@ -865,7 +865,7 @@
 
                             <td>
                                 <t t-foreach="l.move_line_ids" t-as="ml">
-                                    <span t-field="ml.expiration_date"/><br/>
+                                    <span t-field="ml.expiration_date.strftime('%d-%m-%Y')"/><br/>
                                 </t>
 
                             </td>
@@ -940,7 +940,7 @@
 
                             <td>
                                 <t t-foreach="l.move_line_ids" t-as="ml">
-                                    <span t-field="ml.expiration_date"/><br/>
+                                    <span t-field="ml.expiration_date.strftime('%d-%m-%Y')"/><br/>
                                 </t>
 
                             </td>
