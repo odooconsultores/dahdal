@@ -10,7 +10,7 @@
         <xpath expr="//t[@t-foreach='o.move_ids_without_package']//td[5]" position="after">
             <td t-if="has_serial_number">
                 <div>
-                    <span t-field="ml.lot_id.expiration_date.strftime('%d-%m-%Y')"/>
+                    <span t-if="ml.lot_id.expiration_date" t-esc="ml.lot_id.expiration_date.strftime('%d-%m-%Y')"/>
                 </div>
             </td>
         </xpath>
