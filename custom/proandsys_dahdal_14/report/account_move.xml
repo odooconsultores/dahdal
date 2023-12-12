@@ -865,7 +865,7 @@
 
                             <td>
                                 <t t-foreach="l.move_line_ids" t-as="ml">
-                                    <span t-field="ml.expiration_date.strftime('%d-%m-%Y')"/><br/>
+                                    <span t-if="ml.expiration_date" t-esc="ml.expiration_date.strftime('%d-%m-%Y')"/><br/>
                                 </t>
 
                             </td>
@@ -940,7 +940,7 @@
 
                             <td>
                                 <t t-foreach="l.move_line_ids" t-as="ml">
-                                    <span t-field="ml.expiration_date.strftime('%d-%m-%Y')"/><br/>
+                                    <span t-if="ml.expiration_date" t-esc="ml.expiration_date.strftime('%d-%m-%Y')"/><br/>
                                 </t>
 
                             </td>
