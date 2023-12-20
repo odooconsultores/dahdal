@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_template_fefo_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.fefo</field>
+            <field name="model">product.template</field>
+            <field name="priority">5</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='weight']" position="before">
+                    <field name="removal_strategy_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

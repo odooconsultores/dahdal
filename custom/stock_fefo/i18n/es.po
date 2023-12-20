@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_fefo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-10 10:41+0000\n"
+"PO-Revision-Date: 2023-11-10 10:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_fefo
+#: model:ir.model.fields,field_description:stock_fefo.field_pos_config__display_name
+#: model:ir.model.fields,field_description:stock_fefo.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_fefo.field_product_template__display_name
+#: model:ir.model.fields,field_description:stock_fefo.field_stock_quant__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_fefo
+#: model:ir.model.fields,field_description:stock_fefo.field_product_product__removal_strategy_id
+#: model:ir.model.fields,field_description:stock_fefo.field_product_template__removal_strategy_id
+msgid "Force Removal Strategy"
+msgstr "Forzar estrategia de retirada"
+
+#. module: stock_fefo
+#: model:ir.model.fields,field_description:stock_fefo.field_pos_config__id
+#: model:ir.model.fields,field_description:stock_fefo.field_product_product__id
+#: model:ir.model.fields,field_description:stock_fefo.field_product_template__id
+#: model:ir.model.fields,field_description:stock_fefo.field_stock_quant__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_fefo
+#: model:ir.model.fields,field_description:stock_fefo.field_pos_config____last_update
+#: model:ir.model.fields,field_description:stock_fefo.field_product_product____last_update
+#: model:ir.model.fields,field_description:stock_fefo.field_product_template____last_update
+#: model:ir.model.fields,field_description:stock_fefo.field_stock_quant____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: stock_fefo
+#. openerp-web
+#: code:addons/stock_fefo/static/src/js/ProductScreen.js:0
+#, python-format
+msgid "Lot/Serial Number(s) Required"
+msgstr "Número(s) de lote/serie requeridos"
+
+#. module: stock_fefo
+#: model:ir.model.fields,field_description:stock_fefo.field_pos_config__auto_select_lots
+msgid "Lotes automaticos"
+msgstr ""
+
+#. module: stock_fefo
+#: model:ir.model,name:stock_fefo.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración del TPV"
+
+#. module: stock_fefo
+#: model:ir.model,name:stock_fefo.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_fefo
+#: model:ir.model,name:stock_fefo.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: stock_fefo
+#: model:ir.model,name:stock_fefo.model_stock_quant
+msgid "Quants"
+msgstr "Cantidades"
+
+#. module: stock_fefo
+#: model:ir.model.fields,help:stock_fefo.field_product_product__removal_strategy_id
+#: model:ir.model.fields,help:stock_fefo.field_product_template__removal_strategy_id
+msgid ""
+"Set a specific removal strategy that will be used regardless of the source "
+"location for this product category"
+msgstr ""
+"Establezca una estrategia de eliminación específica que se utilizará independientemente "
+"de la ubicación de origen de esta categoría de producto."
+
+#. module: stock_fefo
+#: model_terms:ir.ui.view,arch_db:stock_fefo.pos_config_fefo_view_form
+msgid ""
+"Tomar lotes automaticamente de acuerdo a la estrategia de traslado del "
+"producto."
+msgstr ""

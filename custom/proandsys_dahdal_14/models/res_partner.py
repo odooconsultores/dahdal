@@ -6,3 +6,4 @@ class ResPartner(models.Model):
 
     x_region = fields.Many2one(domain=[('region', '=', True)])
     state_id = fields.Many2one(domain=[('region', '=', False)])
+    giro = fields.Char(default='0')

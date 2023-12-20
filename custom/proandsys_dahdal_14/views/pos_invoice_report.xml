@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <template id="reporte_pos_electronica" inherit_id="proandsys_base_pos_14.reporte_pos_electronica" name="reporte ticket" customize_show="True">
+        <xpath expr="//t[@t-esc='line.product_id.name']" position="replace">
+            <t class="cspan" t-esc="line.product_id.name"/><br/>
+             SN: <t t-if="line.lot_ids" class="cspan" t-esc="line.lot_ids[0].name"/>
+             (Exp. <t t-if="line.lot_ids" class="cspan" t-esc="line.lot_ids[0].expiration_date.date().strftime('%d-%m-%Y')"/>)
+        </xpath>
+    </template>
+
+    </data>
+</odoo>

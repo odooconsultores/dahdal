@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('product-name')]" position="inside">
+            <span> </span>
+            <t t-if="props.line.get_product().tracking!=='none' &amp;&amp; (env.pos.picking_type.use_create_lots || env.pos.picking_type.use_existing_lots)">
+                <t t-if="props.line.has_valid_quantity_lot()">
+                    <span>Generar Lotes</span>
+                    <i t-on-click.stop="lotGenerateLines"
+                        class="oe_link_icon fa fa-gears oe_icon oe_red"
+                        aria-label="Generar Líneas por lotes"
+                        role="img"
+                        title="Generar Líneas por lotes"
+                    />
+                </t>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

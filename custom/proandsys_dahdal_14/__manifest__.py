@@ -12,12 +12,14 @@
 """
 
 """,
-	'depends': ['base', 'proandsys_report_14', 'product', 'website_sale', 'web'],
+	'depends': ['base', 'proandsys_report_14', 'product', 'website_sale', 'web', 'stock_fefo'],
 	'data': [
+		'report/account_move.xml',
 		'views/product_views.xml',
 		'views/website_templates.xml',
 		'views/res_country_views.xml',
 		'views/webclient_templates.xml',
+		'views/pos_invoice_report.xml',
 	],
 	'installable': True,	
 }
