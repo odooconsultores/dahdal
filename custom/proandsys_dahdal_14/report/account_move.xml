@@ -847,7 +847,7 @@
                                 <span t-esc="product_name"/>
                             </td>
                             <td class="text-center">
-                                <span style="display: block"  t-esc="'%.3f'% l.quantity_done"/>
+                                <span style="display: block"  t-esc="'%.0f'% l.quantity_done"/>
                             </td>
                             <td class="text-center">
                                 <t t-if="l.sale_line_id.product_uom">
@@ -922,7 +922,7 @@
                                 <span t-esc="product_name"/>
                             </td>
                             <td class="text-center">
-                                <span style="display: block"  t-esc="'%.3f'% l.quantity_done"/>
+                                <span style="display: block"  t-esc="'%.0f'% l.quantity_done"/>
                             </td>
                             <td class="text-center">
                                 <t t-if="l.sale_line_id.product_uom">
