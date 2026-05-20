@@ -8,6 +8,8 @@ from odoo.exceptions import UserError
 from odoo.addons.l10n_cl_enviame.controllers.main import WebsiteSaleDeliverySend
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 
+_logger = logging.getLogger(__name__)
+
 class WebsiteSale(WebsiteSale):
 
     def _get_shop_payment_values(self, order, **kwargs):
@@ -38,9 +40,10 @@ class WebsiteDeliverySend(WebsiteSaleDeliverySend):
                 weight += sale.product_id.weight * sale.product_uom_qty
 
             options = '?weight=' + str(weight) + '&from_place=' + str(order.warehouse_id.partner_id.city) +\
-                      '&to_place=' + str(order.partner_shipping_id.city)
+                      '&to_place=' + str(order.partner_shipping_id.state_id.name)
             # _logger.info('\n\n\n url enviame: %s \n\n\n' % options)
             response = value.get('url_price')+options
+            _logger.info('RESPONSE:%s',response)
             r = requests.get(response, headers=header)
             data = json.loads(r.text.encode('utf8'))
             for t in data.get('data', []):
