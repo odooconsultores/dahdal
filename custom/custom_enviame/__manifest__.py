@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Customización Enviame',
-    'version': '14.0.2.0.0',
+    'version': '14.0.3.0.0',
     'author': 'Clara Savelli <clara.15is.cs@gmail.com',
     'license': 'AGPL-3',
     'website': '',
