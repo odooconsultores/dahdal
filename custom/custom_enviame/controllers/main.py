@@ -8,6 +8,33 @@ from odoo.exceptions import UserError
 from odoo.addons.l10n_cl_enviame.controllers.main import WebsiteSaleDeliverySend
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 
+_logger = logging.getLogger(__name__)
+
+def _get_values_your_env(firma_state):
+    config = request.env['ir.config_parameter'].sudo()
+    if firma_state == 'test':
+        return {
+            'url_price': 'https://facturacion.enviame.io/api/v1/prices',
+            'delivery_url': 'https://stage.api.enviame.io/api/s2/v2/companies/{0}/deliveries'
+            .format(config.get_param('id_company')),
+            'pickup_url': 'https://stage.api.enviame.io/api/s2/v2/companies/{0}/pickups'
+            .format(config.get_param('id_company')),
+            'api_key': config.get_param('api_key'),
+            'warehouse_code': config.get_param('warehouse_code'),
+            'n_package': config.get_param('n_package'),
+        }
+    else:
+        return {
+            'api_key': config.get_param('api_key'),
+            'url_price': 'https://facturacion.enviame.io/api/v1/prices',
+            'delivery_url': 'https://api.enviame.io/api/s2/v2/companies/{0}/deliveries'
+            .format(config.get_param('id_company')),
+            'pickup_url': 'https://api.enviame.io/api/s2/v2/companies/{0}/pickups'
+            .format(config.get_param('id_company')),
+            'warehouse_code': config.get_param('warehouse_code'),
+            'n_package': config.get_param('n_package'),
+        }
+
 class WebsiteSale(WebsiteSale):
 
     def _get_shop_payment_values(self, order, **kwargs):
@@ -20,6 +47,11 @@ class WebsiteSale(WebsiteSale):
 
 
 class WebsiteDeliverySend(WebsiteSaleDeliverySend):
+
+    def return_values_your_env(self):
+        config = request.env['ir.config_parameter'].sudo().get_param('state_env')
+        url = _get_values_your_env(config)
+        return url
 
 
     def _update_website_sale_delivery_return(self, order, **post):
@@ -38,11 +70,13 @@ class WebsiteDeliverySend(WebsiteSaleDeliverySend):
                 weight += sale.product_id.weight * sale.product_uom_qty
 
             options = '?weight=' + str(weight) + '&from_place=' + str(order.warehouse_id.partner_id.city) +\
-                      '&to_place=' + str(order.partner_shipping_id.city)
+                      '&to_place=' + str(order.partner_shipping_id.state_id.name)
             # _logger.info('\n\n\n url enviame: %s \n\n\n' % options)
             response = value.get('url_price')+options
+            _logger.info('RESPONSE:%s',response)
             r = requests.get(response, headers=header)
             data = json.loads(r.text.encode('utf8'))
+            _logger.info('DATA:%s',data)
             for t in data.get('data', []):
                 if carrier.delivery_request.code == t['carrier']:
                     amount_delivery = t['services'][0]['price']
