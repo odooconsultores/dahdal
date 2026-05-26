@@ -14,7 +14,7 @@ class DeliveryCarrier(models.Model):
         if not carrier:
             return res
         else:
-            if self.amount:
+            if self.amount and self.delivery_request:
                 res['price'] = self.amount * 1.19
                 return res
             else :
